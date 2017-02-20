@@ -29,7 +29,7 @@ namespace NSpeedTest.Client
             };
 
             var url =
-                "https://functionplayground.azurewebsites.net/api/InternetUpSpeedTest?code=a7jinsvJmWdcILhjo5F05jJxekdrz6qhpOgQlTGn0Rt3a0a2qHn9/w==";
+                "<your function>";
 
             await url.Post(us.Serialise());
 
