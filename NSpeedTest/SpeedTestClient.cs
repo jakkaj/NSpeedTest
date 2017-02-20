@@ -16,9 +16,9 @@ namespace NSpeedTest
         private const string ConfigUrl = "http://www.speedtest.net/speedtest-config.php";
         private const string ServersUrl = "http://www.speedtest.net/speedtest-servers.php";
         //private readonly int[] downloadSizes = { 350, 500, 750, 1000, 1500, 2000, 2500, 3000, 3500, 4000 };
-        private readonly int[] downloadSizes = { 350, 750, 1500 };
+        private readonly int[] downloadSizes = { 350, 750, 1500, 2000, 2500, 3000 };
         private const string Chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        private const int MaxUploadSize = 4; // 400 KB
+        private const int MaxUploadSize = 10; // 400 KB
 
         #region ISpeedTestClient
 
@@ -65,7 +65,7 @@ namespace NSpeedTest
                     }
                     finally
                     {
-                        timer.Stop();    
+                        timer.Stop();
                     }
 
                     if (!testString.StartsWith("test=test"))
@@ -145,9 +145,9 @@ namespace NSpeedTest
             var random = new Random();
             var result = new List<NameValueCollection>();
 
-            for (var sizeCounter = 1; sizeCounter < MaxUploadSize+1; sizeCounter++)
+            for (var sizeCounter = 1; sizeCounter < MaxUploadSize + 1; sizeCounter++)
             {
-                var size = sizeCounter*200*1024;
+                var size = sizeCounter * 200 * 1024;
                 var builder = new StringBuilder(size);
 
                 for (var i = 0; i < size; ++i)

@@ -9,17 +9,17 @@ namespace NSpeedTest.Client
     {
         private static SpeedTestClient client;
         private static Settings settings;
-        private const string DefaultCountry = "Belarus";
+        private const string DefaultCountry = "Australia";
 
         static void Main()
         {
             Console.WriteLine("Getting speedtest.net settings and server list...");
             client = new SpeedTestClient();
             settings = client.GetSettings();
-            
+
             var servers = SelectServers();
             var bestServer = SelectBestServer(servers);
-            
+
             Console.WriteLine("Testing speed...");
             var downloadSpeed = client.TestDownloadSpeed(bestServer, settings.Download.ThreadsPerUrl);
             PrintSpeed("Download", downloadSpeed);
@@ -44,7 +44,7 @@ namespace NSpeedTest.Client
         {
             Console.WriteLine();
             Console.WriteLine("Selecting best server by distance...");
-            var servers = settings.Servers.Where(s => s.Country.Equals(DefaultCountry)).Take(10).ToList();
+            var servers = settings.Servers.Where(s => s.Name.Contains("Sydney") && s.Sponsor.Contains("Telstra")).Take(10).ToList();
 
             foreach (var server in servers)
             {
@@ -57,7 +57,7 @@ namespace NSpeedTest.Client
         private static void PrintServerDetails(Server server)
         {
             Console.WriteLine("Hosted by {0} ({1}/{2}), distance: {3}km, latency: {4}ms", server.Sponsor, server.Name,
-                server.Country, (int) server.Distance/1000, server.Latency);
+                server.Country, (int)server.Distance / 1000, server.Latency);
         }
 
         private static void PrintSpeed(string type, double speed)
