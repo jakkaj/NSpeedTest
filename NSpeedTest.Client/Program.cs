@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using NSpeedTest.Models;
 
 namespace NSpeedTest.Client
@@ -26,8 +27,9 @@ namespace NSpeedTest.Client
             var uploadSpeed = client.TestUploadSpeed(bestServer, settings.Upload.ThreadsPerUrl);
             PrintSpeed("Upload", uploadSpeed);
 
-            Console.WriteLine("Press a key to exit.");
-            Console.ReadKey();
+            var result = Uploader.Upload(uploadSpeed, downloadSpeed, bestServer).Result;
+
+            Thread.Sleep(2000);
         }
 
         private static Server SelectBestServer(IEnumerable<Server> servers)
